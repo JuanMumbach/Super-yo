@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Super-yo · Asistente Personal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🧭</div>
+      <div class="brand-text">
+        <span class="brand-title">Super-yo</span>
+        <span class="brand-badge"><span class="pulse-dot"></span> Online</span>
+      </div>
+    </div>
+
+    <nav>
+      <button data-tab="jerarquia" class="nav-tab on">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+        <span>Jerarquía</span>
+        <span class="nav-count" id="count-active">0</span>
+      </button>
+      <button data-tab="congelador" class="nav-tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>
+        <span>Congelador</span>
+        <span class="nav-count" id="count-frozen">0</span>
+      </button>
+      <button data-tab="sistema" class="nav-tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Sistema</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- TAB 1: JERARQUÍA -->
+    <section id="jerarquia" class="tab on">
+      <!-- Mini KPI bar -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon blue">⚡</div>
+          <div class="kpi-info">
+            <span class="kpi-val" id="kpi-active">0</span>
+            <span class="kpi-label">Tareas activas</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon purple">🎯</div>
+          <div class="kpi-info">
+            <span class="kpi-val" id="kpi-goals">0</span>
+            <span class="kpi-label">Metas activas</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon green">📂</div>
+          <div class="kpi-info">
+            <span class="kpi-val" id="kpi-areas">0</span>
+            <span class="kpi-label">Áreas de vida</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon amber">✅</div>
+          <div class="kpi-info">
+            <span class="kpi-val" id="kpi-done">0</span>
+            <span class="kpi-label">Hechas (7 días)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero: Foco Ahora -->
+      <div id="focus"></div>
+
+      <!-- Quick Creation Panel -->
+      <div class="create-card">
+        <div class="create-tabs">
+          <button type="button" class="create-tab-btn on" data-create-tab="task">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Nueva Tarea
+          </button>
+          <button type="button" class="create-tab-btn" data-create-tab="goal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            Nueva Meta
+          </button>
+          <button type="button" class="create-tab-btn" data-create-tab="area">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            Nueva Área
+          </button>
+        </div>
+
+        <!-- Form Task -->
+        <form id="f-task" class="create-form on">
+          <div class="input-wrap flex-main">
+            <input name="title" id="t-title" placeholder="¿Qué quieres avanzar hoy?" required autocomplete="off" />
+          </div>
+          <div class="input-wrap sel-wrap">
+            <label class="input-tag">Meta</label>
+            <select name="goal_id" class="sel-goal"></select>
+          </div>
+          <div class="input-wrap sel-wrap-sm">
+            <label class="input-tag">Urgencia</label>
+            <select name="urgency" title="Urgencia percibida (1 a 5)">
+              <option value="1">1 · Mínima</option>
+              <option value="2">2 · Baja</option>
+              <option value="3" selected>3 · Media</option>
+              <option value="4">4 · Alta</option>
+              <option value="5">5 · Crítica</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">+ Agregar Tarea</button>
+        </form>
+
+        <!-- Form Goal -->
+        <form id="f-goal" class="create-form">
+          <div class="input-wrap flex-main">
+            <input name="title" id="g-title" placeholder="Nombre de la meta u objetivo..." required autocomplete="off" />
+          </div>
+          <div class="input-wrap sel-wrap">
+            <label class="input-tag">Área</label>
+            <select name="area_id" class="sel-area"></select>
+          </div>
+          <div class="input-wrap sel-wrap-sm">
+            <label class="input-tag">Prioridad</label>
+            <select name="priority" title="Prioridad de la meta (1 a 5)">
+              <option value="1">1 · Secundaria</option>
+              <option value="2">2 · Moderada</option>
+              <option value="3" selected>3 · Normal</option>
+              <option value="4">4 · Importante</option>
+              <option value="5">5 · Clave</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-purple">+ Crear Meta</button>
+        </form>
+
+        <!-- Form Area -->
+        <form id="f-area" class="create-form">
+          <div class="input-wrap flex-main">
+            <input name="name" id="a-name" placeholder="Nombre del área (ej. Salud, Trabajo, Estudio, Finanzas)..." required autocomplete="off" />
+          </div>
+          <div class="input-wrap sel-wrap-sm">
+            <label class="input-tag">Importancia</label>
+            <select name="weight" title="Importancia del área en tu vida (1 a 5)">
+              <option value="1">1 · Ocasional</option>
+              <option value="2">2 · Media</option>
+              <option value="3" selected>3 · Regular</option>
+              <option value="4">4 · Fundamental</option>
+              <option value="5">5 · Prioritaria</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-emerald">+ Crear Área</button>
+        </form>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="filter-toolbar">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="search-input" placeholder="Filtrar tareas o metas..." autocomplete="off" />
+          <button id="search-clear" class="icon-btn" title="Limpiar búsqueda" style="display:none;">✕</button>
+        </div>
+        <div class="filter-pills">
+          <button class="pill-filter on" data-filter="all">Todas</button>
+          <button class="pill-filter" data-filter="active">⚡ Activas</button>
+          <button class="pill-filter" data-filter="done">✅ Completadas</button>
+        </div>
+        <div class="toolbar-actions">
+          <button id="btn-toggle-all" class="btn-ghost" title="Colapsar o expandir todas las áreas">↕ Colapsar todo</button>
+        </div>
+      </div>
+
+      <!-- Tree Container -->
+      <div id="tree"></div>
+    </section>
+
+    <!-- TAB 2: CONGELADOR -->
+    <section id="congelador" class="tab">
+      <div class="freezer-header">
+        <div class="freezer-desc">
+          <h2>🧊 Congelador de Tareas</h2>
+          <p>Tareas en pausa (backlog), notas sin meta asignada o descartadas. No te distraen hasta que decidas reactivarlas.</p>
+        </div>
+        <button id="purge" class="btn btn-danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+          Vaciar descartadas
+        </button>
+      </div>
+      <div id="freezer"></div>
+    </section>
+
+    <!-- TAB 3: SISTEMA -->
+    <section id="sistema" class="tab">
+      <div class="grid">
+        <!-- Settings -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚙️ Recordatorios & Fatiga</span>
+            <span id="c-status-badge" class="badge">Activo</span>
+          </div>
+          <div class="form-group">
+            <label>Horas de check-in programadas <span class="muted">(separadas por coma)</span></label>
+            <input id="c-hours" placeholder="10, 15, 19" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Máx. pings / día</label>
+              <input id="c-max" type="number" min="1" max="20" />
+            </div>
+            <div class="form-group">
+              <label>Límite pings ignorados</label>
+              <input id="c-ignore" type="number" min="1" max="10" />
+            </div>
+            <div class="form-group">
+              <label>Hora retrospectiva</label>
+              <input id="c-ahour" type="number" min="0" max="23" />
+            </div>
+          </div>
+          <div class="status-box">
+            <span id="c-state" class="muted">Cargando estado...</span>
+          </div>
+          <div class="card-actions">
+            <button id="save-cfg" class="btn btn-primary">Guardar Configuración</button>
+            <button id="resume" class="btn btn-outline">🔔 Reanudar hoy</button>
+          </div>
+        </div>
+
+        <!-- AI Retrospective Agent -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🧠 Agente CLI & Retrospectiva</span>
+            <button id="analyze" class="btn btn-accent btn-sm">Ejecutar retrospectiva</button>
+          </div>
+          <p class="card-sub">Ejecuta el análisis inteligente del bot para evaluar patrones de respuesta, fatiga y prioridad.</p>
+          <div class="terminal-box">
+            <div class="terminal-bar">
+              <span class="t-dot red"></span>
+              <span class="t-dot yellow"></span>
+              <span class="t-dot green"></span>
+              <span class="terminal-title">retrospectiva.log</span>
+            </div>
+            <pre id="analysis" class="terminal-content">Aún no se ejecutó.</pre>
+          </div>
+        </div>
+
+        <!-- Hourly chart -->
+        <div class="card wide">
+          <div class="card-header">
+            <span class="card-title">📊 Respuesta por Hora (Últimos 14 días)</span>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="legend-dot blue"></span> Actividad</span>
+              <span class="legend-item"><span class="legend-dot green"></span> Hora con check-in</span>
+            </div>
+          </div>
+          <div id="chart"></div>
+          <div class="chart-hours-label">
+            <span>07:00</span>
+            <span>12:00</span>
+            <span>17:00</span>
+            <span>22:00</span>
+          </div>
+        </div>
+
+        <!-- Logs -->
+        <div class="card wide">
+          <div class="card-header">
+            <span class="card-title">🕓 Registro de Interacciones Recientes</span>
+          </div>
+          <div class="table-wrap">
+            <table id="logs"></table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div id="toasts" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
